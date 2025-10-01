@@ -14,31 +14,15 @@ private:
 
 	asio::ip::tcp::acceptor m_acceptor;
 
-	void accept_connection() {
-		m_acceptor.async_accept([this](const asio::error_code& ec, asio::ip::tcp::socket socket) {
-			if (!ec) {
-					std::cout << "Client Connected" << std::endl;
-					m_sessions.push_back(std::make_unique<Session>(std::move(socket)));
+	void accept_connection();
 
-					m_sessions.back()->read_data();
-
-					// Start accepting sessions again
-					accept_connection();
-				}
-				else {
-					std::cout << "Accept error: " << ec.message() << std::endl;
-				}
-			}
-		);
-	}
+	void cleanup_sessions();
 
 public:
 
 	Server(asio::io_context& context, unsigned int port) : m_ioContext(context), m_acceptor(context, asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port)) {}
 
-	void start() {
-		accept_connection();
-	}
+	void start();
 
 };
 
