@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\packets">
+      <UniqueIdentifier>{21b1778a-e5e3-4a9f-a978-8f8317681475}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CharterCityGameServer.cpp">
@@ -31,6 +34,12 @@
     </ClInclude>
     <ClInclude Include="Server.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Packet.h">
+      <Filter>Source Files\packets</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketCodec.h">
+      <Filter>Source Files\packets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

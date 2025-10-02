@@ -5,14 +5,31 @@
 #include <array>
 #include <asio.hpp>
 #include "Server.h"
+#include <vector>
 
 int main()
 {
     try {
         asio::io_context io_context;
+
+        // Start the server
         Server server(io_context, 8080);
         server.start();
-		io_context.run();
+
+		// Create a pool of threads to run the io_context
+		std::vector<std::thread> threads;
+		const auto threadCount = std::thread::hardware_concurrency();
+        for (size_t i = 0; i < threadCount; ++i) {
+            threads.emplace_back([&io_context]() {
+                io_context.run();
+			});
+        }
+
+        // Wait for threads to finish
+        for (auto& thread : threads) {
+            thread.join();
+		}
+
     }
     catch (std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;

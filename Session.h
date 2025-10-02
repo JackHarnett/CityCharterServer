@@ -11,13 +11,16 @@ private:
 
 	asio::ip::tcp::socket m_socket;
 
+	asio::strand<asio::io_context::executor_type> m_strand;
+
 	char m_data[BUF_SIZE];
 
 	bool m_needsClose = false;
 
+
 public:
 
-	Session(asio::ip::tcp::socket socket) : m_socket(std::move(socket)) {};
+	Session(asio::io_context& context, asio::ip::tcp::socket socket) : m_socket(std::move(socket)), m_strand(asio::make_strand(context)) {};
 
 	void disconnect();
 

@@ -130,6 +130,8 @@
     <ClCompile Include="Session.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Packet.h" />
+    <ClInclude Include="PacketCodec.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="Session.h" />
   </ItemGroup>
