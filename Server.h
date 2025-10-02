@@ -16,13 +16,13 @@ private:
 
 	void accept_connection();
 
-	void cleanup_sessions();
-
 public:
 
-	Server(asio::io_context& context, unsigned int port) : m_ioContext(context), m_acceptor(context, asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port)) {}
+	Server(asio::io_context& context, unsigned int port) :
+		m_ioContext(context),
+		m_acceptor(context, asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port))
+	{};
 
 	void start();
 
 };
-

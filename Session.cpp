@@ -15,9 +15,19 @@ void Session::read_data() {
 			if (!ec) {
 				std::cout << "Read " << len << " bytes from channel " << std::endl;
 
+				// If we have too much data stored already, clear the buffer
+				if (m_receive_buffer.size() + len > BUF_SIZE * 2) {
+					m_receive_buffer.clear();
+					std::cout << "Receive buffer overflow, clearing buffer" << std::endl;
+				}
+
+				m_receive_buffer.insert(m_receive_buffer.end(), m_data, m_data + len);
+
 				// Parse and handle the packet
-				auto packet = parse_packet(m_data, len);
-				handle_incoming(packet);
+				if (parse_packet(m_receive_buffer)) {
+					// If a packet has been parsed, clear the buffer. //todo: handle multiple packets in buffer
+					m_receive_buffer.clear();
+				}
 
 				read_data();
 			}

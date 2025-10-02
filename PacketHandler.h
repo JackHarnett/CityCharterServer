@@ -8,18 +8,30 @@
 #include <stdexcept>
 #include <format>
 
-Packet parse_packet(const char* data, size_t length) {
-    if (length < sizeof(PacketOpcode)) {
-        throw std::runtime_error("Data too short to contain opcode.");
+bool parse_packet(const std::vector<char>& data) {
+
+	std::cout << "Parsing packet of length " << data.size() << std::endl;
+	// If the length is less than the size of the opcode and data length, don't process it
+    if (data.size() < sizeof(PacketOpcode) + sizeof(uint16_t)) {
+        return false;
     }
 
     Packet packet;
+    std::memcpy(&packet.opcode, data.data(), sizeof(uint16_t));
+	std::cout << "Packet opcode: " << static_cast<uint16_t>(packet.opcode) << std::endl;
 
-	std::memcpy(&packet.opcode, data, sizeof(PacketOpcode));
-	packet.data.insert(packet.data.end(), data + sizeof(PacketOpcode), data + length);
-	packet.data_length = static_cast<uint16_t>(packet.data.size());
+	// Read the packet size
+	std::memcpy(&packet.data_length, data.data() + sizeof(PacketOpcode), sizeof(uint16_t));
+	std::cout << "Packet data length: " << packet.data_length << std::endl;
 
-    return packet;
+    if (data.size() - 2 * sizeof(uint16_t) < packet.data_length) {
+        return false; // Not enough data for the full packet
+	}
+
+    // Copy the packet payload
+    packet.data.assign(data.data() + 2 * sizeof(uint16_t), data.data() + packet.data_length + 2 * sizeof(uint16_t));
+
+    return true;
 }
 
 void handle_incoming(const Packet& packet) {

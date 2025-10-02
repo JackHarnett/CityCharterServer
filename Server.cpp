@@ -1,5 +1,6 @@
 #include "Server.h"
 #include <algorithm>
+#include <iostream>
 
 void Server::accept_connection() {
 	m_acceptor.async_accept([this](const asio::error_code& ec, asio::ip::tcp::socket socket) {
@@ -15,15 +16,8 @@ void Server::accept_connection() {
 		}
 	});
 }
- void Server::cleanup_sessions() {
-	m_sessions.erase(std::remove_if(m_sessions.begin(), m_sessions.end(),
-		[](const std::unique_ptr<Session>& session) {
-			return session->needsClose();
-		}),
-		m_sessions.end()
-	);
-}
 
  void Server::start() {
+	std::cout << "Server started, waiting for connections..." << std::endl;
 	accept_connection();
 }
