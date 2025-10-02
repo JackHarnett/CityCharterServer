@@ -1,0 +1,89 @@
+# Visual Studio / MSVC
+.vs/
+*.VC.db
+*.VC.opendb
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vcxproj.user
+*.vcxproj.filters
+
+# Build outputs
+[Bb]in/
+[Oo]bj/
+Debug*/
+Release*/
+x64/Debug*/
+x64/Release*/
+build/
+cmake-build-*/
+*.exe
+*.dll
+*.lib
+*.app
+*.o
+*.obj
+*.ipdb
+*.pdb
+*.ilk
+*.sdf
+*.cachefile
+*.log
+
+# MSVC temporary files
+*.tlog/
+*.lastbuildstate
+*.rsp
+
+# NuGet packages
+packages/
+*.nupkg
+
+# vcpkg
+vcpkg_installed/
+buildtrees/
+packages/
+archives/
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CMakeLists.txt.user
+Makefile
+Testing/
+
+# IDEs / editors
+.vscode/
+.idea/
+*.code-workspace
+
+# Misc
+*.tmp
+*~
+*.swp
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+coverage/
+*.lcov
+
+# Logs and runtime files
+*.log
+*.pid
+
+# Git LFS temp
+*.lock
+
+# Ignore backup files
+*.bak
+
+# Ignore generated protocol headers (if any)
+*.gch
+
+# Keep project-specific settings out of VCS
+*.vsconfig
+
+# End

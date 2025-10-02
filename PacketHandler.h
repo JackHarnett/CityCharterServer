@@ -7,13 +7,14 @@
 #include <iostream>
 #include <stdexcept>
 #include <format>
+#include <optional>
 
-bool parse_packet(const std::vector<char>& data) {
+std::optional<Packet> parse_packet(const std::vector<char>& data) {
 
 	std::cout << "Parsing packet of length " << data.size() << std::endl;
 	// If the length is less than the size of the opcode and data length, don't process it
     if (data.size() < sizeof(PacketOpcode) + sizeof(uint16_t)) {
-        return false;
+        return std::nullopt;
     }
 
     Packet packet;
@@ -24,14 +25,15 @@ bool parse_packet(const std::vector<char>& data) {
 	std::memcpy(&packet.data_length, data.data() + sizeof(PacketOpcode), sizeof(uint16_t));
 	std::cout << "Packet data length: " << packet.data_length << std::endl;
 
+    // Not enough data for the full packet
     if (data.size() - 2 * sizeof(uint16_t) < packet.data_length) {
-        return false; // Not enough data for the full packet
+        return std::nullopt; 
 	}
 
     // Copy the packet payload
     packet.data.assign(data.data() + 2 * sizeof(uint16_t), data.data() + packet.data_length + 2 * sizeof(uint16_t));
 
-    return true;
+    return packet;
 }
 
 void handle_incoming(const Packet& packet) {
