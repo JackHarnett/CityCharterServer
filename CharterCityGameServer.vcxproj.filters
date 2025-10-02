@@ -16,6 +16,9 @@
     <Filter Include="Source Files\packets">
       <UniqueIdentifier>{21b1778a-e5e3-4a9f-a978-8f8317681475}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\packets\impl">
+      <UniqueIdentifier>{d6d4accc-877e-4246-a450-c249a71df325}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CharterCityGameServer.cpp">
@@ -39,6 +42,18 @@
       <Filter>Source Files\packets</Filter>
     </ClInclude>
     <ClInclude Include="PacketCodec.h">
+      <Filter>Source Files\packets</Filter>
+    </ClInclude>
+    <ClInclude Include="ChatPacket.h">
+      <Filter>Source Files\packets\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ClickObjectPacket.h">
+      <Filter>Source Files\packets\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="AllPackets.h">
+      <Filter>Source Files\packets</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketHandler.h">
       <Filter>Source Files\packets</Filter>
     </ClInclude>
   </ItemGroup>

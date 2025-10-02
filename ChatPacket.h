@@ -36,4 +36,6 @@ std::vector<char> serialise(const ChatPacket& packet) {
 
 	// Add the string data
 	buffer.insert(buffer.end(), packet.message.begin(), packet.message.end());
+
+	return buffer;
 }

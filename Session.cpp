@@ -1,4 +1,5 @@
 #include "Session.h"
+#include "PacketHandler.h"
 
  void Session::disconnect() {
 	if (m_socket.is_open()) {
@@ -13,7 +14,12 @@ void Session::read_data() {
 		[this](const asio::error_code& ec, size_t len) {
 			if (!ec) {
 				std::cout << "Read " << len << " bytes from channel " << std::endl;
-				write_data(len);
+
+				// Parse and handle the packet
+				auto packet = parse_packet(m_data, len);
+				handle_incoming(packet);
+
+				read_data();
 			}
 			else {
 				std::cout << "Read error: " << ec.message() << std::endl;
@@ -27,7 +33,6 @@ void Session::write_data(size_t len) {
 		[this](const asio::error_code& ec, size_t l) {
 			if (!ec) {
 				std::cout << "Wrote " << l << " bytes to channel " << std::endl;
-				read_data();
 			}
 			else {
 				std::cout << "Read error: " << ec.message() << std::endl;

@@ -2,6 +2,6 @@
 #pragma once
 
 struct ClickObjectPacket {
-	int senderId;
-	std::string message;
+	int clickOption;
+	int objectId;
 };

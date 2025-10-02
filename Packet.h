@@ -9,5 +9,6 @@ enum class PacketOpcode : uint16_t {
 
 struct Packet {
     PacketOpcode opcode;
+    uint16_t data_length;
     std::vector<char> data;
 };
