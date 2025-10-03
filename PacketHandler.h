@@ -9,49 +9,16 @@
 #include <format>
 #include <optional>
 
-std::optional<Packet> parse_packet(const std::vector<char>& data) {
 
-	std::cout << "Parsing packet of length " << data.size() << std::endl;
-	// If the length is less than the size of the opcode and data length, don't process it
-    if (data.size() < sizeof(PacketOpcode) + sizeof(uint16_t)) {
-        return std::nullopt;
-    }
+class PacketHandler
+{
 
-    Packet packet;
-    std::memcpy(&packet.opcode, data.data(), sizeof(uint16_t));
-	std::cout << "Packet opcode: " << static_cast<uint16_t>(packet.opcode) << std::endl;
+private:
+    static const size_t header_size = sizeof(PacketOpcode) + sizeof(uint16_t);
 
-	// Read the packet size
-	std::memcpy(&packet.data_length, data.data() + sizeof(PacketOpcode), sizeof(uint16_t));
-	std::cout << "Packet data length: " << packet.data_length << std::endl;
+    static void handle_incoming(const Packet& packet);
 
-    // Not enough data for the full packet
-    if (data.size() - 2 * sizeof(uint16_t) < packet.data_length) {
-        return std::nullopt; 
-	}
+public:
+    static void read_packet(std::vector<char>& data);
 
-    // Copy the packet payload
-    packet.data.assign(data.data() + 2 * sizeof(uint16_t), data.data() + packet.data_length + 2 * sizeof(uint16_t));
-
-    return packet;
-}
-
-void handle_incoming(const Packet& packet) {
-    switch (static_cast<PacketOpcode>(packet.opcode)) {
-        case PacketOpcode::ChatMessage: {
-            ChatPacket chat = deserialise<ChatPacket>(packet.data);
-			std::cout << "Received chat message from " << chat.senderId << ": " << chat.message << std::endl;
-            break;
-        }
-        case PacketOpcode::ClickObject: {
-            ClickObjectPacket click = deserialise<ClickObjectPacket>(packet.data);
-            break;
-        }
-
-        default: {
-            throw std::runtime_error(std::format("No packet decoder for opcode {}.", static_cast<uint16_t>(packet.opcode)));
-            break;
-        }
-    }
-}
-
+};

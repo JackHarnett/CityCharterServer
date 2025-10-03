@@ -126,6 +126,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CharterCityGameServer.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="PacketHandler.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Session.cpp" />
   </ItemGroup>
@@ -133,6 +135,7 @@
     <ClInclude Include="AllPackets.h" />
     <ClInclude Include="ChatPacket.h" />
     <ClInclude Include="ClickObjectPacket.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Packet.h" />
     <ClInclude Include="PacketCodec.h" />
     <ClInclude Include="PacketHandler.h" />
